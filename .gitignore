@@ -1,0 +1,14 @@
+# Gitignore for solar-challenge-week0
+
+# Ignore virtual environment directory
+.venv/
+venv/
+
+# Ignore raw data directory
+data/
+
+# Ignore CSV data files
+*.csv
+
+# Ignore Jupyter Notebook checkpoint folders anywhere in the repo
+**/.ipynb_checkpoints/
