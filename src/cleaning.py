@@ -4,17 +4,24 @@ This module provides a small, reusable DataCleaner class that
 encapsulates common cleaning steps used in notebooks (timestamp parsing,
 dtype enforcement, clipping invalid values, simple gap imputation, and export).
 
+Public interface
+----------------
+- DataCleaner: primary class to load and clean a dataset programmatically.
+- quick_clean(path, out_path=None): convenience function for scripts.
+- clean_path(path, out_path=None): explicit simple entrypoint for external callers.
+
 Example
 -------
-from src.cleaning import DataCleaner
-dc = DataCleaner(path)
-df_clean = dc.run()
+from src.cleaning import clean_path
+clean_path("data/benin-malanville.csv", out_path="data/benin_clean.csv")
 """
 from __future__ import annotations
 
 from typing import Optional
 import pandas as pd
 import numpy as np
+
+__all__ = ["DataCleaner", "quick_clean", "clean_path"]
 
 
 class DataCleaner:
@@ -155,3 +162,12 @@ def quick_clean(path: str, out_path: Optional[str] = None) -> pd.DataFrame:
     """Functional convenience wrapper around DataCleaner for quick scripts/notebooks."""
     dc = DataCleaner(path)
     return dc.run(out_path=out_path)
+
+
+def clean_path(path: str, out_path: Optional[str] = None) -> pd.DataFrame:
+    """Alias for external callers: clean a CSV at `path` and optionally write out.
+
+    This function is a stable, small public entrypoint suitable for CI checks or
+    simple scripts that need to run the full cleaning pipeline.
+    """
+    return quick_clean(path, out_path=out_path)
