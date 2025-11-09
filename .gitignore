@@ -1,6 +1,6 @@
 # Gitignore for solar-challenge-week0
 
-# Ignore vscode conf file
+# Ignore .vscode settings folder
 .vscode/
 
 # Ignore virtual environment directory
